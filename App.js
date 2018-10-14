@@ -15,22 +15,23 @@ class HomeScreen extends React.Component {
   static navigationOptions = {
     title: 'Home',
     headerStyle: {
-      display: 'none'
     }
   };
 
   render() {
     return (
-      <View style={styles.container}>
+      <View>
         <Text style={styles.welcome}>Disasters</Text>
-        <FlatList
-          data={[{key: 'Earthquake'}, {key: 'Lava'}]}
-          renderItem={({item}) => <Text>{item.key}</Text>}
-        />
-        <Button
-          title="Go to Details"
-          onPress={() => this.props.navigation.navigate('Details')}
-        />
+        <View>
+          <FlatList style={styles.list}
+            data={[{key: 'Earthquake'}, {key: 'Lava'}]}
+            renderItem={({item}) => <Text style={styles.item}>{item.key}</Text>}
+          />
+          <Button
+            title="Go to Details"
+            onPress={() => this.props.navigation.navigate('Details')}
+          />
+        </View>
       </View>
     );
   }
@@ -70,10 +71,21 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'white',
+    paddingTop: 22,
+    paddingBottom: 22
   },
   welcome: {
     fontSize: 20,
-    textAlign: 'center',
+    textAlign: 'left',
     margin: 10,
   },
+  list: {
+    margin: 20,
+    flexGrow: 0
+  },
+  item: {
+    fontSize:20,
+    margin: 5,
+    paddingTop: 10,
+  }
 });
