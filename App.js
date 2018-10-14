@@ -1,13 +1,5 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- */
-
-import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View, Button} from 'react-native';
+import React, {Component, PureComponent} from 'react';
+import {Platform, StyleSheet, Text, View, Button, FlatList, TouchableOpacity} from 'react-native';
 import {createStackNavigator} from 'react-navigation';
 
 // const instructions = Platform.select({
@@ -30,7 +22,11 @@ class HomeScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text>Home Screen</Text>
+        <Text style={styles.welcome}>Disasters</Text>
+        <FlatList
+          data={[{key: 'Earthquake'}, {key: 'Lava'}]}
+          renderItem={({item}) => <Text>{item.key}</Text>}
+        />
         <Button
           title="Go to Details"
           onPress={() => this.props.navigation.navigate('Details')}
@@ -73,16 +69,11 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    backgroundColor: 'white',
   },
   welcome: {
     fontSize: 20,
     textAlign: 'center',
     margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
   },
 });
