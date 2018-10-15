@@ -1,5 +1,5 @@
 import React, {Component, PureComponent} from 'react';
-import {Platform, StyleSheet, Text, View, Button, FlatList, TouchableOpacity} from 'react-native';
+import {Platform, StyleSheet, Alert, Text, View, Button, FlatList, TouchableOpacity} from 'react-native';
 import {createStackNavigator} from 'react-navigation';
 
 // const instructions = Platform.select({
@@ -23,9 +23,14 @@ class HomeScreen extends React.Component {
       <View>
         <Text style={styles.welcome}>Disasters</Text>
         <View>
-          <MultiSelectList style={styles.list}
-            data={[{id:0, title: 'Earthquake'}, {id: 1, title: 'Lava'}]}
-            // renderItem={({item}) => <Text style={styles.item}>{item.key}</Text>}
+          <FlatList style={styles.list}
+            data={[{key:'Earthquake'}, {key: 'Lava'}]}
+            renderItem={({item}) => <Button
+              title={item.key}
+              onPress={() =>
+                this.props.navigation.navigate('Details', { title: item.key })
+              }
+            />}
           />
           <Button
             title="Go to Details"
