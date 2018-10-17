@@ -53,15 +53,15 @@ class DetailsScreen extends React.Component {
   renderDisasters(param) {
     switch (param) {
       case "Earthquake":
-        return 'quake baby';
+        return <Text>quake baby</Text>;
       case "Volcano":
-        return 'Volcano baby';
+        return <Text>Volcano baby</Text>;
       case "Storm":
-        return 'storm baby';
+        return <Text>storm baby</Text>;
       case "Typhoon":
-        return 'typhoon baby';
+        return <Text>typhoon baby</Text>;
       default:
-        return 'param';
+        return <Text>{param}</Text>;
     }
   }
 
@@ -71,8 +71,7 @@ class DetailsScreen extends React.Component {
 
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-
-        <Text>{this.renderDisasters(title)}</Text>
+        {this.renderDisasters(title)}
       </View>
     );
   }
