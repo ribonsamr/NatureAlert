@@ -11,6 +11,62 @@ import {createStackNavigator} from 'react-navigation';
 
 type Props = {};
 
+class MyListItem extends React.PureComponent {
+  _onPress = () => {
+    this.props.onPressItem(this.props.id);
+  };
+
+  render() {
+    const textColor = this.props.selected ? "red" : "black";
+    return (
+      <TouchableOpacity onPress={this._onPress}>
+        <View>
+          <Text style={{ color: textColor }}>
+            {this.props.title}
+          </Text>
+        </View>
+      </TouchableOpacity>
+    );
+  }
+}
+
+class MultiSelectList extends React.PureComponent {
+  state = {selected: (new Map(): Map<string, boolean>)};
+
+  _keyExtractor = (item, index) => item.id;
+
+  _onPressItem = (id: string) => {
+    // updater functions are preferred for transactional updates
+    this.setState((state) => {
+      // copy the map rather than modifying state.
+      const selected = new Map(state.selected);
+      selected.set(id, !selected.get(id)); // toggle
+      return {selected};
+    });
+  };
+
+  _renderItem = ({item}) => (
+    <MyListItem
+      id={item.id}
+      onPressItem={this._onPressItem}
+      selected={!!this.state.selected.get(item.id)}
+      title={item.title}
+    />
+  );
+
+  render() {
+    return (
+      <FlatList
+        data={this.props.data}
+        extraData={this.state}
+        keyExtractor={this._keyExtractor}
+        renderItem={this._renderItem}
+      />
+    );
+  }
+}
+
+
 class HomeScreen extends React.Component {
   static navigationOptions = {
     title: 'Home',
@@ -53,7 +109,6 @@ class DetailsScreen extends React.Component {
   renderDisasters(param) {
     switch (param) {
       case "Earthquake":
-<<<<<<< HEAD
         return <Text>quake</Text>;
       case "Volcano":
         return <Text>Volcano</Text>;
@@ -61,15 +116,6 @@ class DetailsScreen extends React.Component {
         return <Text>storm</Text>;
       case "Typhoon":
         return <Text>typhoon</Text>;
-=======
-        return <Text>quake baby</Text>;
-      case "Volcano":
-        return <Text>Volcano baby</Text>;
-      case "Storm":
-        return <Text>storm baby</Text>;
-      case "Typhoon":
-        return <Text>typhoon baby</Text>;
->>>>>>> d44f0e2823d53e199184220dbe43dce34a4aba4d
       default:
         return <Text>{param}</Text>;
     }
