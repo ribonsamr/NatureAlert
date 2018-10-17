@@ -1,5 +1,5 @@
 import React, {Component, PureComponent} from 'react';
-import {Platform, StyleSheet, Alert, Text, View, Button, FlatList, TouchableOpacity} from 'react-native';
+import {Platform, StyleSheet, Alert, Text, View, Button, FlatList, TouchableOpacity, AsyncStorage} from 'react-native';
 import {createStackNavigator} from 'react-navigation';
 
 // const instructions = Platform.select({
@@ -24,7 +24,7 @@ class HomeScreen extends React.Component {
         <Text style={styles.welcome}>Disasters</Text>
         <View>
           <FlatList style={styles.list}
-            data={[{key:'Earthquake'}, {key: 'Lava'}]}
+            data={[{key:'Earthquake'}, {key: 'Volcano'}, {key: 'Storm'}, {key: 'Typhoon'}]}
             renderItem={({item}) => <Button
               title={item.key}
               onPress={() =>
@@ -32,15 +32,16 @@ class HomeScreen extends React.Component {
               }
             />}
           />
-          <Button
+          {/* <Button
             title="Go to Details"
             onPress={() => this.props.navigation.navigate('Details', {title: 'Earthquake'})}
-          />
+          /> */}
         </View>
       </View>
     );
   }
 }
+
 
 class DetailsScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
@@ -49,10 +50,29 @@ class DetailsScreen extends React.Component {
     };
   };
 
+  renderDisasters(param) {
+    switch (param) {
+      case "Earthquake":
+        return 'quake baby';
+      case "Volcano":
+        return 'Volcano baby';
+      case "Storm":
+        return 'storm baby';
+      case "Typhoon":
+        return 'typhoon baby';
+      default:
+        return 'param';
+    }
+  }
+
   render() {
+    const { navigation } = this.props;
+    const title = navigation.getParam('title');
+
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Text>Details Screen</Text>
+
+        <Text>{this.renderDisasters(title)}</Text>
       </View>
     );
   }
