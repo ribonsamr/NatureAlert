@@ -10,19 +10,17 @@ import {earthquakeBeforeList, earthquakeDuringList, earthquakeAfterList} from '.
 //     'Shake or press menu button for dev menu',
 // });
 
-type Props = {};
-
 class MyListItem extends React.PureComponent {
   _onPress = () => {
     this.props.onPressItem(this.props.id);
   };
 
   render() {
-    const textColor = this.props.selected ? "red" : "black";
+    const _style = this.props.selected ? styles.itemSel : styles.item;
     return (
       <TouchableOpacity onPress={this._onPress}>
         <View>
-          <Text style={{ color: textColor, backgroundColor: 'grey' }}>
+          <Text style={_style}>
             {this.props.title}
           </Text>
         </View>
@@ -76,11 +74,12 @@ class HomeScreen extends React.Component {
 
   render() {
     return (
-      <View>
-        <View>
+      <View style={styles.topView}>
+        <View style={styles.secondaryView}>
           <FlatList style={styles.list}
             data={[{key:'Earthquake'}, {key: 'Volcano'}, {key: 'Storm'}, {key: 'Typhoon'}]}
             renderItem={({item}) => <Button
+              style={styles.mainButton}
               title={item.key}
               onPress={() =>
                 this.props.navigation.navigate('Details', { title: item.key })
@@ -122,16 +121,18 @@ class StepsScreen extends React.Component {
   renderDisasters(param) {
     switch (param) {
       case "Earthquake":
-      return <ScrollView>
-        <Text>Before an Earthquake:</Text>
+      return <ScrollView style={styles.container}>
+        <Text style={styles.title}>Before an Earthquake:</Text>
 
-        <Text>Make sure to have:</Text>
+        <Text style={styles.subTitle}>Make sure to have:</Text>
         <MultiSelectList data={earthquakeBeforeList}></MultiSelectList>
 
-        <Text>During an Earthquake:</Text>
+        <Text style={styles.title}>During an Earthquake:</Text>
+        <View style={styles.hr}/>
         <MultiSelectList data={earthquakeDuringList}></MultiSelectList>
 
-        <Text>After an Earthquake:</Text>
+        <Text style={styles.title}>After an Earthquake:</Text>
+        <View style={styles.hr}/>
         <MultiSelectList data={earthquakeAfterList}></MultiSelectList>
 
       </ScrollView>;
@@ -194,25 +195,53 @@ export default class App extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
     backgroundColor: 'white',
-    paddingTop: 22,
-    paddingBottom: 22
+    padding: 10
   },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'left',
-    margin: 10,
+  topView: {
+    backgroundColor: 'white',
+    height: '100%'
+  },
+  secondaryView: {
+    backgroundColor: 'white',
+    flex: 0,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   list: {
-    margin: 20,
+    marginTop: '50%',
     flexGrow: 0
   },
   item: {
-    fontSize:20,
+    fontSize: 18,
+    marginTop: 5,
+    marginBottom: 5,
+    padding: 10,
+    color: '#1976D2'
+  },
+  itemSel: {
+    fontSize: 18,
+    marginTop: 5,
+    marginBottom: 5,
+    padding: 10,
+    color: '#BDC3C7'
+  },
+  title: {
+    fontSize: 30,
+    fontWeight: 'bold',
+    color: '#212121',
+    marginBottom: 10,
+  },
+  subTitle: {
+    fontSize: 15,
+    color: '#212121',
+    fontWeight: 'bold'
+  },
+  mainButton: {
+    padding: 10,
+    backgroundColor: '#F7F9F9',
+    fontSize: 15,
     margin: 5,
-    paddingTop: 10,
+    borderRadius: 3
   }
 });
