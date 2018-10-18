@@ -1,6 +1,7 @@
 import React, {Component, PureComponent} from 'react';
-import {Platform, StyleSheet, Alert, Text, View, Button, FlatList, TouchableOpacity, AsyncStorage} from 'react-native';
-import {createStackNavigator} from 'react-navigation';
+import {Platform, StyleSheet, ScrollView, Alert, Text, View, Button, FlatList, TouchableOpacity, AsyncStorage} from 'react-native';
+import {createStackNavigator, createBottomTabNavigator} from 'react-navigation';
+import {earthquakeBeforeList, earthquakeDuringList, earthquakeAfterList} from './data.js';
 
 // const instructions = Platform.select({
 //   ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
@@ -21,7 +22,7 @@ class MyListItem extends React.PureComponent {
     return (
       <TouchableOpacity onPress={this._onPress}>
         <View>
-          <Text style={{ color: textColor }}>
+          <Text style={{ color: textColor, backgroundColor: 'grey' }}>
             {this.props.title}
           </Text>
         </View>
@@ -69,15 +70,13 @@ class MultiSelectList extends React.PureComponent {
 
 class HomeScreen extends React.Component {
   static navigationOptions = {
-    title: 'Home',
-    headerStyle: {
-    }
+    title: 'Disasters',
+    headerStyle: {}
   };
 
   render() {
     return (
       <View>
-        <Text style={styles.welcome}>Disasters</Text>
         <View>
           <FlatList style={styles.list}
             data={[{key:'Earthquake'}, {key: 'Volcano'}, {key: 'Storm'}, {key: 'Typhoon'}]}
@@ -88,55 +87,97 @@ class HomeScreen extends React.Component {
               }
             />}
           />
-          {/* <Button
-            title="Go to Details"
-            onPress={() => this.props.navigation.navigate('Details', {title: 'Earthquake'})}
-          /> */}
         </View>
       </View>
     );
   }
 }
 
-
-class DetailsScreen extends React.Component {
+class BagScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
     return {
-      title: navigation.getParam('title'),
+      title: 'Bag',
+    };
+  };
+  render() {
+    const { navigation } = this.props;
+    const title = navigation.getParam('title');
+
+    return (
+      <View>
+        <Text>{this.title}</Text>
+      </View>
+    );
+  }
+}
+
+
+class StepsScreen extends React.Component {
+  static navigationOptions = ({ navigation }) => {
+    return {
+      title: 'Precautions',
     };
   };
 
   renderDisasters(param) {
     switch (param) {
       case "Earthquake":
-        return <Text>quake</Text>;
-      case "Volcano":
-        return <Text>Volcano</Text>;
-      case "Storm":
-        return <Text>storm</Text>;
-      case "Typhoon":
-        return <Text>typhoon</Text>;
-      default:
-        return <Text>{param}</Text>;
-    }
+      return <ScrollView>
+        <Text>Before an Earthquake:</Text>
+
+        <Text>Make sure to have:</Text>
+        <MultiSelectList data={earthquakeBeforeList}></MultiSelectList>
+
+        <Text>During an Earthquake:</Text>
+        <MultiSelectList data={earthquakeDuringList}></MultiSelectList>
+
+        <Text>After an Earthquake:</Text>
+        <MultiSelectList data={earthquakeAfterList}></MultiSelectList>
+
+      </ScrollView>;
+
+    case "Volcano":
+    return <Text>Volcano</Text>;
+
+    case "Storm":
+    return <Text>storm</Text>;
+
+    case "Typhoon":
+    return <Text>typhoon</Text>;
+
+    default:
+    return <Text>{param}</Text>;
   }
+}
 
   render() {
     const { navigation } = this.props;
     const title = navigation.getParam('title');
 
     return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <View>
         {this.renderDisasters(title)}
       </View>
     );
   }
 }
 
+const DisastersStack = createBottomTabNavigator(
+  {
+    Steps: StepsScreen,
+    Bag: BagScreen,
+  },
+  {
+    initialRouteName: 'Steps',
+    navigationOptions: ({ navigation }) => ({
+    })
+  }
+);
+
 const RootStack = createStackNavigator(
   {
     Home: HomeScreen,
-    Details: DetailsScreen,
+    Details: DisastersStack,
   },
   {
     initialRouteName: 'Home',
