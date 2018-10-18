@@ -78,13 +78,11 @@ class HomeScreen extends React.Component {
         <View style={styles.secondaryView}>
           <FlatList style={styles.list}
             data={[{key:'Earthquake'}, {key: 'Volcano'}, {key: 'Storm'}, {key: 'Typhoon'}]}
-            renderItem={({item}) => <Button
-              style={styles.mainButton}
-              title={item.key}
-              onPress={() =>
-                this.props.navigation.navigate('Details', { title: item.key })
-              }
-            />}
+            renderItem={({item}) => <TouchableOpacity onPress={ () => {
+              this.props.navigation.navigate('Details', { title: item.key })}}
+              style={styles.mainButton}>
+              <Text>{item.key}</Text>
+            </TouchableOpacity>}
           />
         </View>
       </View>
