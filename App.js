@@ -1,7 +1,9 @@
 import React, {Component, PureComponent} from 'react';
-import {Platform, StyleSheet, ScrollView, Alert, Text, View, Button, FlatList, TouchableOpacity, AsyncStorage} from 'react-native';
+import {Platform, StyleSheet, ScrollView, TextInput, Alert, Text, View, Button, FlatList, TouchableOpacity, AsyncStorage} from 'react-native';
 import {createStackNavigator, createBottomTabNavigator} from 'react-navigation';
 import {earthquakeBeforeList, earthquakeDuringList, earthquakeAfterList} from './data.js';
+
+import Item from './item.js';
 
 // const instructions = Platform.select({
 //   ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
@@ -91,20 +93,48 @@ class HomeScreen extends React.Component {
 }
 
 class BagScreen extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {text: '', tasks: []};
+  }
+
   static navigationOptions = ({ navigation }) => {
     return {
       title: 'Bag',
     };
   };
+
   render() {
     const { navigation } = this.props;
     const title = navigation.getParam('title');
 
+    let items = this.state.tasks.map((val, key) => {
+      return <Item key={key} keyval={key} val={val}
+        deleteMethod={ ()=> this.deleteItem(key) }/>
+    });
+
     return (
       <View>
-        <Text>{this.title}</Text>
+        <TextInput
+          style={{height: 40}}
+          placeholder="Type here to translate!"
+          onChangeText={(text) => this.setState({text})}
+          value={this.state.text}
+          onSubmitEditing={this.addItem.bind(this)}
+        />
+        <ScrollView style={styles.container}>
+          {items}
+        </ScrollView>
       </View>
     );
+  }
+
+  addItem() {
+    if (this.state.text) {
+      this.state.tasks.push(this.state.text);
+      this.setState({tasks: this.state.tasks});
+      this.setState({text: ''});
+    }
   }
 }
 
