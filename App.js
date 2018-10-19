@@ -128,8 +128,10 @@ class BagScreen extends React.Component {
     const title = navigation.getParam('title');
 
     let items = this.state.tasks.map((val, key) => {
-      return <Item key={key} keyval={key} val={val}
-        deleteMethod={ () => this.deleteItem(key) }/>
+      if (val) {
+        return <Item key={key} keyval={key} val={val}
+          deleteMethod={ () => this.deleteItem(key) }/>
+      }
     });
 
     return (
@@ -145,12 +147,12 @@ class BagScreen extends React.Component {
         />
         <Text style={styles.bagScreenNote}>Press on items to mark as done.</Text>
         <Text style={styles.bagScreenNote}>Long press on items to delete.</Text>
-        <Text style={styles.bagScreenNote}>{`${this.state.title} bag: ${this.state.tasks.length}`}</Text>
+        <Text style={styles.bagScreenNote}>{`${this.state.title} bag: ${this.state.tasks.slice(0).sort().indexOf(null)}`}</Text>
         <ScrollView style={styles.bagView}>
           <TouchableOpacity
-            disabled={this.state.tasks.length > 0 ? false : true}
+            disabled={this.state.tasks.slice(0).sort().indexOf(null) > 0 ? false : true}
             onPress={this.deleteAll.bind(this)} style={styles.clearAll}>
-            <Text style={this.state.tasks.length > 0 ? styles.clearAllText : styles.clearAllTextDisabled }>Clear All</Text>
+            <Text style={this.state.tasks.slice(0).sort().indexOf(null) > 0 ? styles.clearAllText : styles.clearAllTextDisabled }>Clear All</Text>
           </TouchableOpacity>
           {items}
         </ScrollView>
@@ -191,7 +193,8 @@ class BagScreen extends React.Component {
       'Are you sure?',
       [
         {text: 'Yes', onPress: () => {
-          this.state.tasks.splice(key, 1);
+          // this.state.tasks.splice(key, 1);
+          this.state.tasks[key] = null;
           this.setState({ tasks: this.state.tasks });
           this.saveData();
         }, style: 'destructive'},
