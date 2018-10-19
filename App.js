@@ -124,7 +124,7 @@ class BagScreen extends React.Component {
           style={styles.textinput}
           blurOnSubmit={false}
         />
-        <ScrollView style={styles.container}>
+        <ScrollView style={styles.bagView}>
           {items}
         </ScrollView>
       </View>
@@ -140,8 +140,19 @@ class BagScreen extends React.Component {
   }
 
   deleteItem(key) {
-    this.state.tasks.splice(key, 1);
-    this.setState({ tasks: this.state.tasks });
+    Alert.alert(
+      'Delete item',
+      'Are you sure?',
+      [
+        {text: 'Yes', onPress: () => {
+          this.state.tasks.splice(key, 1);
+          this.setState({ tasks: this.state.tasks });
+        }, style: 'destructive'},
+        {text: 'Cancel', onPress: () => {}, style: 'cancel'},
+      ],
+      { cancelable: false }
+    )
+
   }
 }
 
@@ -232,6 +243,12 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: 'white',
     padding: 10,
+  },
+  bagView: {
+    padding: 10,
+    backgroundColor: 'white',
+    position: 'relative',
+    height: '88%'
   },
   topView: {
     backgroundColor: 'white',
