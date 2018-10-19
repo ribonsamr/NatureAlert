@@ -26,6 +26,7 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     padding: 10,
   },
+<<<<<<< HEAD
   itemDelete: {
     position: 'absolute',
     justifyContent: 'center',
@@ -34,4 +35,6 @@ const styles = StyleSheet.create({
     right: 10,
     bottom: 10,
   }
+=======
+>>>>>>> f98a496668f3566899d90d05bc86173570e1c62f
 });

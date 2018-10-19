@@ -116,7 +116,6 @@ class BagScreen extends React.Component {
     return (
       <View>
         <TextInput
-          ref={(input) => {this.tinput = input;}}
           style={{height: 40}}
           placeholder="Add..."
           onChangeText={(text) => this.setState({text})}
@@ -139,11 +138,14 @@ class BagScreen extends React.Component {
       this.setState({text: ''});
     }
   }
+<<<<<<< HEAD
 
   deleteItem(key) {
     this.state.tasks.splice(key, 1);
     this.setState({ tasks: this.state.tasks });
   }
+=======
+>>>>>>> f98a496668f3566899d90d05bc86173570e1c62f
 }
 
 
