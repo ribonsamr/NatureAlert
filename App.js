@@ -1,7 +1,10 @@
 import React, {Component, PureComponent} from 'react';
 import {Platform, StyleSheet, ScrollView, TextInput, Alert, Text, View, Button, FlatList, TouchableOpacity, AsyncStorage} from 'react-native';
 import {createStackNavigator, createBottomTabNavigator} from 'react-navigation';
-import {earthquakeBeforeList, earthquakeDuringList, earthquakeAfterList} from './data.js';
+import {earthquakeBeforeList, earthquakeDuringList, earthquakeAfterList,
+volcanoDuringList, volcanoProtectFromAsh, volcanoCanDo,
+stormCanDo, stormDoAfter, stormDoBefore, stormDoDuring,
+typhoonAfter, typhoonBefore, typhoonDuring} from './data.js';
 
 import Item from './item.js';
 
@@ -218,23 +221,57 @@ class StepsScreen extends React.Component {
         <MultiSelectList data={earthquakeBeforeList}></MultiSelectList>
 
         <Text style={styles.title}>During an Earthquake:</Text>
-        <View style={styles.hr}/>
         <MultiSelectList data={earthquakeDuringList}></MultiSelectList>
 
         <Text style={styles.title}>After an Earthquake:</Text>
-        <View style={styles.hr}/>
         <MultiSelectList data={earthquakeAfterList}></MultiSelectList>
 
       </ScrollView>;
 
     case "Volcano":
-    return <Text>Volcano</Text>;
+    return <ScrollView style={styles.container}>
+      <Text style={styles.title}>A Volcano can cause:</Text>
+      <Text style={styles.PrecautionScreenNote}>Press on items to mark as done.</Text>
+      <MultiSelectList data={volcanoCanDo}></MultiSelectList>
+
+      <Text style={styles.title}>During a Volcanic Eruption:</Text>
+      <MultiSelectList data={volcanoDuringList}></MultiSelectList>
+
+      <Text style={styles.title}>Protection from falling Ash:</Text>
+      <MultiSelectList data={volcanoProtectFromAsh}></MultiSelectList>
+
+    </ScrollView>;
 
     case "Storm":
-    return <Text>storm</Text>;
+    return <ScrollView style={styles.container}>
+      <Text style={styles.title}>A Storm can cause:</Text>
+      <Text style={styles.PrecautionScreenNote}>Press on items to mark as done.</Text>
+      <MultiSelectList data={stormCanDo}></MultiSelectList>
+
+      <Text style={styles.title}>Before a Storm:</Text>
+      <MultiSelectList data={stormDoBefore}></MultiSelectList>
+
+      <Text style={styles.title}>During a Storm:</Text>
+      <MultiSelectList data={stormDoDuring}></MultiSelectList>
+
+      <Text style={styles.title}>After a Storm:</Text>
+      <MultiSelectList data={stormDoAfter}></MultiSelectList>
+
+    </ScrollView>;
 
     case "Typhoon":
-    return <Text>typhoon</Text>;
+    return <ScrollView style={styles.container}>
+      <Text style={styles.title}>Before a Typhoon:</Text>
+      <Text style={styles.PrecautionScreenNote}>Press on items to mark as done.</Text>
+      <MultiSelectList data={typhoonBefore}></MultiSelectList>
+
+      <Text style={styles.title}>During a Typhoon:</Text>
+      <MultiSelectList data={typhoonDuring}></MultiSelectList>
+
+      <Text style={styles.title}>After a Typhoon:</Text>
+      <MultiSelectList data={typhoonAfter}></MultiSelectList>
+
+    </ScrollView>;
 
     default:
     return <Text>{param}</Text>;

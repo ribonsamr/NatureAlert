@@ -11,7 +11,6 @@ export default class Item extends Component {
 
   _onPress = () => {
     this.setState({done: !this.state.done});
-    this.render();
   };
 
 

@@ -3,7 +3,8 @@ export const earthquakeBeforeList = [
   {id:'1', title: 'First aid kit'},
   {id:'2', title: 'Battery-powered radio'},
   {id:'3', title: 'Flashlight'},
-  {id:'4', title: 'Extra batteries'}];
+  {id:'4', title: 'Extra batteries'}
+];
 
 export const earthquakeDuringList = [
   {id:'0', title: "Stay calm! If you're indoors, stay inside. If you're outside, stay outside."},
@@ -11,7 +12,8 @@ export const earthquakeDuringList = [
   {id:'2', title: "If you're outdoors, stay in the open away from power lines or anything that might fall. Stay away from buildings (stuff might fall off the building or the building could fall on you)."},
   {id:'3', title: "Don't use matches, candles, or any flame. Broken gas lines and fire don't mix."},
   {id:'4', title: "If you're in a car, stop the car and stay inside the car until the earthquake stops."},
-  {id:'5', title: "Don't use elevators (they'll probably get stuck anyway)."}];
+  {id:'5', title: "Don't use elevators (they'll probably get stuck anyway)."}
+];
 
 export const earthquakeAfterList = [
   {id:'0', title: "Check yourself and others for injuries. Provide first aid for anyone who needs it."},
@@ -21,4 +23,94 @@ export const earthquakeAfterList = [
   {id:'4', title: "Be careful around broken glass and debris. Wear boots or sturdy shoes to keep from cutting your feet."},
   {id:'6', title: "Stay away from beaches. Tsunamis and seiches sometimes hit after the ground has stopped shaking."},
   {id:'7', title: "Stay away from damaged areas."},
-  {id:'8', title: "If you're at school or work, follow the emergency plan or the instructions of the person in charge."}]
+  {id:'8', title: "If you're at school or work, follow the emergency plan or the instructions of the person in charge."}
+];
+
+export const volcanoCanDo = [
+  {id:'0', title: 'Contaminate water supplies.'},
+  {id:'1', title: 'Damage machinery.'},
+  {id:'2', title: 'Reduce visibility through smog and harmful gases that may threaten low-lying areas.'},
+  {id:'3', title: 'Make it hard to breathe and irritate the skin, eyes, nose, and throat.'},
+];
+
+export const volcanoDuringList = [
+  {id:'0', title: "If indoor, close all windows and doors."},
+  {id:'1', title: "If outdoor, seek shelter to avoid flying debris, hot gases, lateral blast and lava flow."},
+  {id:'2', title: "Avoid low lying areas."},
+  {id:'3', title: "Wear long sleeved shirts, and long pants."},
+  {id:'4', title: "Use goggles to protect your eyes."},
+  {id:'5', title: "Use dust masks."},
+  {id:'6', title: "Be aware of mudflows. Mudflows can move faster than you can walk or run. Look upstream before crossing a bridge and do not cross the bridge if a mudflow is approaching."},
+];
+
+export const volcanoProtectFromAsh = [
+  {id:'0', title: "If you have a respiratory ailment, avoid contact with any amount of ash. Stay indoors until local health officials advise it is safe to go outside."},
+  {id:'1', title: "Listen to a battery-powered radio or television for the latest emergency information."},
+  {id:'2', title: "Stay indoors until the ash has settled unless there is a danger of the roof collapsing."},
+  {id:'3', title: "Close doors, windows, and all ventilation in the house (chimney vents, furnaces, air conditioners, fans and other vents."},
+  {id:'4', title: "Clear heavy ash from flat or low-pitched roofs and rain gutters."},
+  {id:'5', title: "Avoid running car or truck engines. Driving can stir up volcanic ash that can clog engines, damage moving parts, and stall vehicles."},
+  {id:'6', title: "Avoid driving in heavy ash fall unless absolutely required. If you have to drive, keep speed down to 35 MPH or slower."},
+];
+
+export const stormCanDo = [
+  {id:'0', title: 'Include powerful winds over 50 MPH.'},
+  {id:'1', title: 'Create hail.'},
+  {id:'2', title: 'Cause flash flooding and tornadoes.'},
+];
+
+
+export const stormDoBefore = [
+  {id:'0', title: 'Check that loose items such as outdoor settings, umbrellas and trampolines are safely secured.'},
+  {id:'1', title: 'If it is safe to do so, check gutters, downpipes and drains are not blocked.'},
+  {id:'2', title: 'Park your car undercover and away from trees.'},
+];
+
+export const stormDoDuring = [
+  {id:'0', title: 'Stay indoors and away from windows.'},
+  {id:'1', title: 'If outdoors, shelter away from drains, gutters, creeks and waterways.'},
+  {id:'2', title: 'Be prepared for power outages.'},
+  {id:'3', title: 'First aid kit'},
+  {id:'4', title: 'Battery-powered radio'},
+  {id:'5', title: 'Flashlight'},
+  {id:'6', title: 'Extra batteries'},
+  {id:'7', title: 'Floodwater is dangerous – never drive, walk or ride through floodwater.'},
+  {id:'8', title: 'Floodwater is toxic – never play or swim in floodwater.'}
+];
+
+export const stormDoAfter = [
+  {id:'0', title: 'Check your home and property for damage.'},
+  {id:'1', title: 'Keep clear of damaged buildings, powerlines and trees.'},
+  {id:'2', title: 'Be aware of road hazards such as floodwater, debris and damaged roads or bridges.'},
+  {id:'3', title: 'Do not drive through affected areas unless it is necessary.'},
+];
+
+
+export const typhoonBefore = [
+  {id:'0', title: 'Store an adequate supply of food and clean water.'},
+  {id:'1', title: 'Prepare foods that need not be cooked.'},
+  {id:'2', title: 'Keep flashlights, candles and battery-powered radios within easy reach.'},
+  {id:'3', title: 'Examine your house and repair its unstable parts.'},
+  {id:'4', title: 'Always keep yourself updated with the latest weather report'},
+  {id:'5', title: 'Should you need to evacuate, bring clothes, first aid kit, candles/flashlight, battery-powered radio, food, etc.'},
+];
+
+export const typhoonDuring = [
+  {id:'0', title: 'Stay inside the house.'},
+  {id:'1', title: 'Always keep yourself updated with the latest weather report.'},
+  {id:'2', title: 'If safe drinking water is not available, boil water for at least 20 minutes. Place it in a container with cover.'},
+  {id:'3', title: 'Keep an eye on lighted candles or gas lamps.'},
+  {id:'4', title: 'Do not wade through floodwaters to avoid being electrocuted and contracting diseases'},
+  {id:'5', title: 'If there is a need to move to an evacuation center, follow these reminders.'},
+  {id:'6', title: 'Close the windows and turn off the main power switch.'},
+  {id:'7', title: 'Put important appliances and belongings in a high ground.'},
+  {id:'8', title: 'Avoid the way leading to the river.'},
+];
+
+export const typhoonAfter = [
+  {id:'0', title: 'If your house was destroyed, make sure that it is already safe and stable when you enter.'},
+  {id:'1', title: 'Beware of dangerous animals such as snakes that may have entered your house.'},
+  {id:'2', title: 'Watch out for live wires or outlet immersed in water.'},
+  {id:'3', title: 'Report damaged electrical cables and fallen electric posts to the authorities.'},
+  {id:'4', title: 'Do not let water accumulate in tires, cans or pots to avoid creating a favorable condition for mosquito breeding'},
+];
