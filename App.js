@@ -20,9 +20,9 @@ class MyListItem extends React.PureComponent {
   render() {
     const _style = this.props.selected ? styles.itemSel : styles.item;
     return (
-      <TouchableOpacity onPress={this._onPress}>
+      <TouchableOpacity style={_style} onPress={this._onPress}>
         <View>
-          <Text style={_style}>
+          <Text>
             {this.props.title}
           </Text>
         </View>
@@ -100,7 +100,6 @@ class BagScreen extends React.Component {
     const title = navigation.getParam('title');
 
     this.state = {text: '', tasks: [], title: title};
-
   }
 
   componentDidMount() {
@@ -109,7 +108,6 @@ class BagScreen extends React.Component {
         this.setState({tasks: JSON.parse(value)});
       }
     }).done();
-    console.log(this.state.tasks);
   }
 
   saveData() {
@@ -128,11 +126,11 @@ class BagScreen extends React.Component {
 
     let items = this.state.tasks.map((val, key) => {
       return <Item key={key} keyval={key} val={val}
-        deleteMethod={ ()=> this.deleteItem(key) }/>
+        deleteMethod={ () => this.deleteItem(key) }/>
     });
 
     return (
-      <View>
+      <View style={{flexShrink: 1}}>
         <TextInput
           style={{height: 40}}
           placeholder="Add..."
@@ -143,13 +141,37 @@ class BagScreen extends React.Component {
           blurOnSubmit={false}
         />
         <Text style={styles.bagScreenNote}>Press on items to mark as done.</Text>
+        <Text style={styles.bagScreenNote}>Long press on items to delete.</Text>
         <Text style={styles.bagScreenNote}>{`${this.state.title} bag: ${this.state.tasks.length}`}</Text>
         <ScrollView style={styles.bagView}>
+          <TouchableOpacity
+            disabled={this.state.tasks.length > 0 ? false : true}
+            onPress={this.deleteAll.bind(this)} style={styles.clearAll}>
+            <Text style={this.state.tasks.length > 0 ? styles.clearAllText : styles.clearAllTextDisabled }>Clear All</Text>
+          </TouchableOpacity>
           {items}
         </ScrollView>
+
       </View>
     );
   }
+
+  deleteAll() {
+    Alert.alert(
+      'Delete All',
+      'Are you sure to remove all items?',
+      [
+        {text: 'Yes', onPress: () => {
+          this.state.tasks = [];
+          this.setState({ tasks: this.state.tasks });
+          this.saveData();
+        }, style: 'destructive'},
+        {text: 'Cancel', onPress: () => {}, style: 'cancel'},
+      ],
+      { cancelable: false }
+    )
+  }
+
 
   addItem() {
     if (this.state.text) {
@@ -168,12 +190,12 @@ class BagScreen extends React.Component {
         {text: 'Yes', onPress: () => {
           this.state.tasks.splice(key, 1);
           this.setState({ tasks: this.state.tasks });
+          this.saveData();
         }, style: 'destructive'},
         {text: 'Cancel', onPress: () => {}, style: 'cancel'},
       ],
       { cancelable: false }
     )
-
   }
 }
 
@@ -190,6 +212,7 @@ class StepsScreen extends React.Component {
       case "Earthquake":
       return <ScrollView style={styles.container}>
         <Text style={styles.title}>Before an Earthquake:</Text>
+        <Text style={styles.PrecautionScreenNote}>Press on items to mark as done.</Text>
 
         <Text style={styles.subTitle}>Make sure to have:</Text>
         <MultiSelectList data={earthquakeBeforeList}></MultiSelectList>
@@ -268,9 +291,9 @@ const styles = StyleSheet.create({
   bagView: {
     padding: 10,
     backgroundColor: 'white',
-    position: 'relative',
-    height: '88%',
-    borderRadius: 15
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
+    // height: '70%' Remove with removing flexShrink
   },
   topView: {
     backgroundColor: 'white',
@@ -289,18 +312,32 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   item: {
-    fontSize: 18,
     marginTop: 5,
     marginBottom: 5,
-    padding: 10,
-    color: '#1976D2',
+    paddingTop: 10,
+    paddingBottom: 10,
+    paddingLeft: 5,
+    paddingRight: 5,
+    color: 'black',
+    borderBottomWidth: 1,
+    borderBottomColor: '#E5E7E9',
+    borderRadius: 3,
+    backgroundColor: 'white',
+    fontSize: 16,
   },
   itemSel: {
-    fontSize: 18,
     marginTop: 5,
     marginBottom: 5,
-    padding: 10,
-    color: '#BDC3C7'
+    paddingTop: 10,
+    paddingBottom: 10,
+    paddingLeft: 5,
+    paddingRight: 5,
+    color: '#BDC3C7',
+    borderBottomWidth: 1,
+    borderBottomColor: '#E5E7E9',
+    borderRadius: 3,
+    backgroundColor: '#E0E0E0',
+    fontSize: 16,
   },
   title: {
     fontSize: 30,
@@ -347,5 +384,31 @@ const styles = StyleSheet.create({
     color: 'grey',
     paddingLeft: 6,
     marginBottom: 10
+  },
+  PrecautionScreenNote: {
+    fontSize: 12,
+    color: 'grey',
+    marginBottom: 10
+  },
+  clearAll: {
+    borderBottomWidth: 2,
+    borderBottomColor: '#E5E7E9',
+    borderRadius: 3,
+  },
+  clearAllText: {
+    color: 'red',
+    textAlign: 'right',
+    paddingTop: 10,
+    paddingBottom: 10,
+    paddingLeft: 10,
+    paddingRight: 10
+  },
+  clearAllTextDisabled: {
+    color: 'grey',
+    textAlign: 'right',
+    paddingTop: 10,
+    paddingBottom: 10,
+    paddingLeft: 10,
+    paddingRight: 10
   }
 });
