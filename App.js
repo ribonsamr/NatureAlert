@@ -76,7 +76,10 @@ class EmergencyScreen extends React.Component {
     const { navigation } = this.props;
     const title = navigation.getParam('title');
 
-    this.state = {text: '', numbers: [], title: title};
+    this.state = {text: '', numbers: [], title: title,
+    latitude: '',
+    longitude: '',
+    error: ''};
   }
 
   componentDidMount() {
@@ -90,6 +93,17 @@ class EmergencyScreen extends React.Component {
         console.log(this.state.numbers);
       }
     }).done();
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        this.setState({
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+          error: null,
+        });
+      },
+      (error) => this.setState({ error: error.message }),
+      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
+    );
   }
 
   static navigationOptions = ({ navigation }) => {
@@ -187,7 +201,7 @@ class EmergencyScreen extends React.Component {
     const numbers = this.state.numbers;
 
     SendSMS.send({
-      body: `I'm in danger, ${this.state.title} is happening.`,
+      body: `I'm in danger, ${this.state.title} is happening.\n${this.state.latitude}-${this.state.longitude}`,
       recipients: [...numbers],
       successTypes: ['sent', 'queued'],
       allowAndroidSendWithoutReadPermission: true
