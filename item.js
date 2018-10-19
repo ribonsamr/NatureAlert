@@ -38,8 +38,8 @@ export default class Item extends Component {
 
 const styles = StyleSheet.create({
   Item: {
-    marginTop: 10,
-    marginBottom: 10,
+    marginTop: 5,
+    marginBottom: 5,
     paddingTop: 10,
     paddingBottom: 10,
     paddingLeft: 5,
@@ -52,8 +52,8 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   ItemDone: {
-    marginTop: 10,
-    marginBottom: 10,
+    marginTop: 5,
+    marginBottom: 5,
     paddingTop: 10,
     paddingBottom: 10,
     paddingLeft: 5,
@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: '#E5E7E9',
     borderRadius: 3,
-    backgroundColor: '#BDBDBD',
+    backgroundColor: '#E0E0E0',
     fontSize: 16,
   },
   itemDelete: {
