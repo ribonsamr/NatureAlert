@@ -113,7 +113,6 @@ class BagScreen extends React.Component {
           return el != null;
         });
         this.setState({tasks: value});
-        console.log(value);
       }
     }).done();
   }
@@ -200,7 +199,6 @@ class BagScreen extends React.Component {
       'Are you sure?',
       [
         {text: 'Yes', onPress: () => {
-          // this.state.tasks.splice(key, 1);
           this.state.tasks[key] = null;
           this.setState({ tasks: this.state.tasks });
           this.saveData();
