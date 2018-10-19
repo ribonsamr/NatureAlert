@@ -172,6 +172,7 @@ class EmergencyScreen extends React.Component {
       'Are you sure?',
       [
         {text: 'Yes', onPress: () => {
+          console.log(this.state.numbers);
           this.state.numbers.splice(key, 1);
           this.setState({ numbers: this.state.numbers });
           this.saveData();
@@ -183,12 +184,15 @@ class EmergencyScreen extends React.Component {
   }
 
   send() {
+    const numbers = this.state.numbers;
+
     SendSMS.send({
       body: `I'm in danger, ${this.state.title} is happening.`,
-      recipients: this.state.numbers,
+      recipients: [...numbers],
       successTypes: ['sent', 'queued'],
       allowAndroidSendWithoutReadPermission: true
     }, (completed, cancelled, error) => {
+      // console.log(this.state.numbers);
       // Alert.alert('SMS Callback: completed: ' + completed + ' cancelled: ' + cancelled + 'error: ' + error);
     });
   }
