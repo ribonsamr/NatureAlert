@@ -21,15 +21,12 @@ export default class Item extends Component {
     return (
       <View>
         <View key={this.props.keyval}>
-          <TouchableOpacity style={_style} onPress={this._onPress}>
+          <TouchableOpacity style={_style} onPress={this._onPress} onLongPress={this.props.deleteMethod}>
               <Text>
                 {this.props.val}
               </Text>
           </TouchableOpacity>
         </View>
-        <TouchableOpacity onPress={this.props.deleteMethod} style={styles.itemDelete}>
-          <Text style={styles.itemDeleteText}>—</Text>
-        </TouchableOpacity>
       </View>
     );
   }
@@ -65,19 +62,4 @@ const styles = StyleSheet.create({
     backgroundColor: '#E0E0E0',
     fontSize: 16,
   },
-  itemDelete: {
-    position: 'absolute',
-    justifyContent: 'center',
-    alignItems: 'center',
-    top: 0,
-    right: 0,
-    bottom: 0,
-    paddingLeft: 15,
-    paddingRight: 10,
-    paddingTop: 5,
-    paddingBottom: 5,
-  },
-  itemDeleteText: {
-    color: 'red',
-  }
 });
