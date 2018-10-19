@@ -5,8 +5,8 @@ import {earthquakeBeforeList, earthquakeDuringList, earthquakeAfterList,
 volcanoDuringList, volcanoProtectFromAsh, volcanoCanDo,
 stormCanDo, stormDoAfter, stormDoBefore, stormDoDuring,
 typhoonAfter, typhoonBefore, typhoonDuring} from './data.js';
-
-import Item from './item.js';
+import SendSMS from 'react-native-sms';
+import {Item, SimpleItem} from './item.js';
 
 // const instructions = Platform.select({
 //   ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
@@ -70,6 +70,130 @@ class MultiSelectList extends React.PureComponent {
   }
 }
 
+class EmergencyScreen extends React.Component {
+  constructor(props) {
+    super(props);
+    const { navigation } = this.props;
+    const title = navigation.getParam('title');
+
+    this.state = {text: '', numbers: [], title: title};
+  }
+
+  componentDidMount() {
+    AsyncStorage.getItem("emergencycontacts").then((value) => {
+      if (value) {
+        value = JSON.parse(value);
+        value = value.filter((el) => {
+          return el != null;
+        });
+        this.setState({numbers: value});
+        console.log(this.state.numbers);
+      }
+    }).done();
+  }
+
+  static navigationOptions = ({ navigation }) => {
+    return {
+      title: 'Emergency',
+    };
+  };
+
+  render() {
+    let items = this.state.numbers.map((val, key) => {
+      if (val) {
+        return <SimpleItem key={key} keyval={key} val={val}
+          deleteMethod={ () => this.deleteItem(key) }/>
+      }
+    });
+
+    let length = this.state.numbers.filter(function(value) { return value !== null }).length;
+
+    return (
+      <View style={{flex: 1}}>
+        <TextInput
+          style={{height: 40}}
+          placeholder="Add..."
+          onChangeText={(text) => this.setState({text})}
+          value={this.state.text}
+          onSubmitEditing={this.addNumber.bind(this)}
+          style={styles.textinput}
+          blurOnSubmit={false}
+        />
+        <Text style={styles.bagScreenNote}>Long press on numbers to delete.</Text>
+        <ScrollView style={styles.bagView}>
+          <TouchableOpacity
+            disabled={length > 0 ? false : true}
+            onPress={this.deleteAll.bind(this)} style={styles.clearAll}>
+            <Text style={length > 0 ? styles.clearAllText : styles.clearAllTextDisabled }>Clear All</Text>
+          </TouchableOpacity>
+          {items}
+        </ScrollView>
+        <TouchableOpacity style={styles.emergencyButton} onPress={this.send.bind(this)}>
+          <Text style={styles.emergencyContent}>Send Messages Now</Text>
+        </TouchableOpacity>
+      </View>
+
+    );
+  }
+
+  saveData() {
+     AsyncStorage.setItem("emergencycontacts", JSON.stringify(this.state.numbers));
+  }
+
+  deleteAll() {
+    Alert.alert(
+      'Delete All',
+      'Are you sure to remove all items?',
+      [
+        {text: 'Yes', onPress: () => {
+          this.state.numbers = [];
+          this.setState({ numbers: this.state.numbers });
+          this.saveData();
+        }, style: 'destructive'},
+        {text: 'Cancel', onPress: () => {}, style: 'cancel'},
+      ],
+      { cancelable: false }
+    )
+  }
+
+
+  addNumber() {
+    if (this.state.text) {
+      this.state.numbers.push(this.state.text);
+      this.setState({numbers: this.state.numbers});
+      this.setState({text: ''});
+      this.saveData();
+    }
+  }
+
+  deleteItem(key) {
+    Alert.alert(
+      'Delete item',
+      'Are you sure?',
+      [
+        {text: 'Yes', onPress: () => {
+          this.state.numbers.splice(key, 1);
+          this.setState({ numbers: this.state.numbers });
+          this.saveData();
+        }, style: 'destructive'},
+        {text: 'Cancel', onPress: () => {}, style: 'cancel'},
+      ],
+      { cancelable: false }
+    )
+  }
+
+  send() {
+    SendSMS.send({
+      body: `I'm in danger, ${this.state.title} is happening.`,
+      recipients: this.state.numbers,
+      successTypes: ['sent', 'queued'],
+      allowAndroidSendWithoutReadPermission: true
+    }, (completed, cancelled, error) => {
+      // Alert.alert('SMS Callback: completed: ' + completed + ' cancelled: ' + cancelled + 'error: ' + error);
+    });
+  }
+
+}
 
 class HomeScreen extends React.Component {
   static navigationOptions = {
@@ -302,6 +426,7 @@ const DisastersStack = createBottomTabNavigator(
   {
     Steps: StepsScreen,
     Bag: BagScreen,
+    Emergency: EmergencyScreen
   },
   {
     initialRouteName: 'Steps',
@@ -323,7 +448,7 @@ const RootStack = createStackNavigator(
 
 export default class App extends React.Component {
   render() {
-    return <RootStack persistenceKey='NavState'/>;
+    return <RootStack/>;
   }
 }
 
@@ -406,7 +531,7 @@ const styles = StyleSheet.create({
     marginLeft: 'auto',
     marginRight: 'auto',
     height: 50,
-    flex: 1,
+    // flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -455,5 +580,26 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
     paddingLeft: 10,
     paddingRight: 10
-  }
+  },
+  emergencyButton: {
+    padding: 10,
+    backgroundColor: 'red',
+    fontSize: 15,
+    margin: 5,
+    borderRadius: 3,
+    textAlign: 'center',
+    width: '80%',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    height: 50,
+    // flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  emergencyContent: {
+    textAlign: 'center',
+    fontSize: 17,
+    color: 'white',
+    fontWeight: '600'
+  },
 });

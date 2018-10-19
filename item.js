@@ -2,7 +2,7 @@ import React, {Component, PureComponent} from 'react';
 
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 
-export default class Item extends Component {
+export class Item extends Component {
   constructor(props) {
     super(props);
     this.state = {done: false};
@@ -21,6 +21,23 @@ export default class Item extends Component {
       <View>
         <View key={this.props.keyval}>
           <TouchableOpacity style={_style} onPress={this._onPress} onLongPress={this.props.deleteMethod}>
+              <Text>
+                {this.props.val}
+              </Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    );
+  }
+
+}
+
+export class SimpleItem extends Component {
+  render() {
+    return (
+      <View>
+        <View key={this.props.keyval}>
+          <TouchableOpacity style={styles.Item} onLongPress={this.props.deleteMethod}>
               <Text>
                 {this.props.val}
               </Text>
