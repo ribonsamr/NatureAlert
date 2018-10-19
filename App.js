@@ -95,7 +95,25 @@ class HomeScreen extends React.Component {
 class BagScreen extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {text: '', tasks: []};
+
+    const { navigation } = this.props;
+    const title = navigation.getParam('title');
+
+    this.state = {text: '', tasks: [], title: title};
+
+  }
+
+  componentDidMount() {
+    AsyncStorage.getItem(`${this.state.title}-items`).then((value) => {
+      if (value) {
+        this.setState({tasks: JSON.parse(value)});
+      }
+    }).done();
+    console.log(this.state.tasks);
+  }
+
+  saveData() {
+     AsyncStorage.setItem(`${this.state.title}-items`, JSON.stringify(this.state.tasks));
   }
 
   static navigationOptions = ({ navigation }) => {
@@ -124,6 +142,8 @@ class BagScreen extends React.Component {
           style={styles.textinput}
           blurOnSubmit={false}
         />
+        <Text style={styles.bagScreenNote}>Press on items to mark as done.</Text>
+        <Text style={styles.bagScreenNote}>{`${this.state.title} bag: ${this.state.tasks.length}`}</Text>
         <ScrollView style={styles.bagView}>
           {items}
         </ScrollView>
@@ -136,6 +156,7 @@ class BagScreen extends React.Component {
       this.state.tasks.push(this.state.text);
       this.setState({tasks: this.state.tasks});
       this.setState({text: ''});
+      this.saveData();
     }
   }
 
@@ -248,7 +269,8 @@ const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: 'white',
     position: 'relative',
-    height: '88%'
+    height: '88%',
+    borderRadius: 15
   },
   topView: {
     backgroundColor: 'white',
@@ -311,10 +333,19 @@ const styles = StyleSheet.create({
     fontSize: 17
   },
   textinput: {
+    backgroundColor: 'white',
     margin: 10,
     paddingLeft: 6,
     paddingRight: 6,
-    paddingTop: 3,
-    paddingBottom: 3
+    paddingTop: 6,
+    paddingBottom: 6,
+    borderRadius: 5,
+    height: 35
+  },
+  bagScreenNote: {
+    fontSize: 12,
+    color: 'grey',
+    paddingLeft: 6,
+    marginBottom: 10
   }
 });

@@ -20,21 +20,17 @@ export default class Item extends Component {
 
     return (
       <View>
-        <View key={this.props.keyval} style={styles.Item}>
-          {/* <Text style={styles.item}>{this.props.val}</Text> */}
-          <TouchableOpacity onPress={this._onPress}>
-            <View>
-              <Text style={_style}>
+        <View key={this.props.keyval}>
+          <TouchableOpacity style={_style} onPress={this._onPress}>
+              <Text>
                 {this.props.val}
               </Text>
-            </View>
           </TouchableOpacity>
         </View>
         <TouchableOpacity onPress={this.props.deleteMethod} style={styles.itemDelete}>
           <Text style={styles.itemDeleteText}>—</Text>
         </TouchableOpacity>
       </View>
-
     );
   }
 
@@ -42,16 +38,32 @@ export default class Item extends Component {
 
 const styles = StyleSheet.create({
   Item: {
-    marginTop: 5,
-    marginBottom: 5,
-    padding: 5,
-    color: '#1976D2',
+    marginTop: 10,
+    marginBottom: 10,
+    paddingTop: 10,
+    paddingBottom: 10,
+    paddingLeft: 5,
+    paddingRight: 5,
+    color: 'black',
+    borderBottomWidth: 1,
+    borderBottomColor: '#E5E7E9',
+    borderRadius: 3,
+    backgroundColor: 'white',
+    fontSize: 16,
   },
   ItemDone: {
-    marginTop: 5,
-    marginBottom: 5,
-    padding: 5,
-    color: '#BDC3C7'
+    marginTop: 10,
+    marginBottom: 10,
+    paddingTop: 10,
+    paddingBottom: 10,
+    paddingLeft: 5,
+    paddingRight: 5,
+    color: '#BDC3C7',
+    borderBottomWidth: 1,
+    borderBottomColor: '#E5E7E9',
+    borderRadius: 3,
+    backgroundColor: '#BDBDBD',
+    fontSize: 16,
   },
   itemDelete: {
     position: 'absolute',
@@ -66,6 +78,6 @@ const styles = StyleSheet.create({
     paddingBottom: 5,
   },
   itemDeleteText: {
-    color: 'red'
+    color: 'red',
   }
 });
