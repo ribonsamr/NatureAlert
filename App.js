@@ -134,6 +134,7 @@ class EmergencyScreen extends React.Component {
           blurOnSubmit={false}
         />
         <Text style={styles.bagScreenNote}>Long press on numbers to delete.</Text>
+        <Text style={styles.bagScreenNote}>Make sure to enable location services for this app from settings.</Text>
         <ScrollView style={styles.bagView}>
           <TouchableOpacity
             disabled={length > 0 ? false : true}
