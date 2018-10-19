@@ -108,7 +108,12 @@ class BagScreen extends React.Component {
   componentDidMount() {
     AsyncStorage.getItem(`${this.state.title}-items`).then((value) => {
       if (value) {
-        this.setState({tasks: JSON.parse(value)});
+        value = JSON.parse(value);
+        value = value.filter((el) => {
+          return el != null;
+        });
+        this.setState({tasks: value});
+        console.log(value);
       }
     }).done();
   }
@@ -134,6 +139,8 @@ class BagScreen extends React.Component {
       }
     });
 
+    let length = this.state.tasks.filter(function(value) { return value !== null }).length;
+
     return (
       <View style={{flexShrink: 1}}>
         <TextInput
@@ -147,12 +154,12 @@ class BagScreen extends React.Component {
         />
         <Text style={styles.bagScreenNote}>Press on items to mark as done.</Text>
         <Text style={styles.bagScreenNote}>Long press on items to delete.</Text>
-        <Text style={styles.bagScreenNote}>{`${this.state.title} bag: ${this.state.tasks.slice(0).sort().indexOf(null)}`}</Text>
+        <Text style={styles.bagScreenNote}>{`${this.state.title} bag: ${length}`}</Text>
         <ScrollView style={styles.bagView}>
           <TouchableOpacity
-            disabled={this.state.tasks.slice(0).sort().indexOf(null) > 0 ? false : true}
+            disabled={length > 0 ? false : true}
             onPress={this.deleteAll.bind(this)} style={styles.clearAll}>
-            <Text style={this.state.tasks.slice(0).sort().indexOf(null) > 0 ? styles.clearAllText : styles.clearAllTextDisabled }>Clear All</Text>
+            <Text style={length > 0 ? styles.clearAllText : styles.clearAllTextDisabled }>Clear All</Text>
           </TouchableOpacity>
           {items}
         </ScrollView>
