@@ -81,7 +81,7 @@ class HomeScreen extends React.Component {
             renderItem={({item}) => <TouchableOpacity onPress={ () => {
               this.props.navigation.navigate('Details', { title: item.key })}}
               style={styles.mainButton}>
-              <Text>{item.key}</Text>
+              <Text style={styles.buttonContent}>{item.key}</Text>
             </TouchableOpacity>}
           />
         </View>
@@ -201,14 +201,16 @@ const styles = StyleSheet.create({
     height: '100%'
   },
   secondaryView: {
+    flex: 1,
     backgroundColor: 'white',
-    flex: 0,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   list: {
-    marginTop: '50%',
-    flexGrow: 0
+    marginTop: 'auto',
+    marginBottom: 'auto',
+    flexGrow: 0,
+    width: '100%',
   },
   item: {
     fontSize: 18,
@@ -240,6 +242,18 @@ const styles = StyleSheet.create({
     backgroundColor: '#F7F9F9',
     fontSize: 15,
     margin: 5,
-    borderRadius: 3
+    borderRadius: 3,
+    textAlign: 'center',
+    width: '80%',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    height: 50,
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  buttonContent: {
+    textAlign: 'center',
+    fontSize: 17
   }
 });
