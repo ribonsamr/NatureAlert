@@ -100,8 +100,11 @@ class EmergencyScreen extends React.Component {
           longitude: position.coords.longitude,
           error: null,
         });
+        // Alert.alert("Got location");
       },
-      (error) => this.setState({ error: error.message }),
+      (error) => {this.setState({ error: error.message });
+        Alert.alert(error.message);
+      },
       { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
     );
   }
