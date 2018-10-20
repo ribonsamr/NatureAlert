@@ -217,13 +217,14 @@ class EmergencyScreen extends React.Component {
 class HomeScreen extends React.Component {
   static navigationOptions = {
     title: 'Disasters',
-    headerStyle: {}
+    headerStyle: {display: 'none'}
   };
 
   render() {
     return (
       <View style={styles.topView}>
         <View style={styles.secondaryView}>
+          <Text style={styles.appName}>NatureAlert</Text>
           <FlatList style={styles.list}
             data={[{key:'Earthquake 🏠'}, {key: 'Volcano 🌋'}, {key: 'Storm 🌪'}, {key: 'Typhoon 🌀'}]}
             renderItem={({item}) => <TouchableOpacity onPress={ () => {
@@ -232,6 +233,7 @@ class HomeScreen extends React.Component {
               <Text style={styles.buttonContent}>{item.key}</Text>
             </TouchableOpacity>}
           />
+          <Text style={styles.dummies}>The 4 Dummies – NASA SPACE APPS '18</Text>
         </View>
       </View>
     );
@@ -498,6 +500,17 @@ export default class App extends React.Component {
 
 
 const styles = StyleSheet.create({
+  appName: {
+    fontSize: 30,
+    fontWeight: 'bold',
+    marginTop: 'auto',
+    color: '#66BB6A',
+    marginBottom: 50
+  },
+  dummies: {
+    marginBottom: 3,
+    fontSize: 10
+  },
   container: {
     backgroundColor: 'white',
     padding: 10,
@@ -520,7 +533,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   list: {
-    marginTop: 'auto',
+    // marginTop: 'auto',
     marginBottom: 'auto',
     flexGrow: 0,
     width: '100%',
