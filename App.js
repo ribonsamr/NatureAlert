@@ -1,5 +1,5 @@
 import React, {Component, PureComponent} from 'react';
-import {Platform, StyleSheet, ScrollView, TextInput, Alert, Text, View, Button, FlatList, TouchableOpacity, AsyncStorage} from 'react-native';
+import {Platform, StyleSheet, ScrollView, TextInput, Alert, Image, Text, View, Button, FlatList, TouchableOpacity, AsyncStorage} from 'react-native';
 import {createStackNavigator, createBottomTabNavigator} from 'react-navigation';
 import {earthquakeBeforeList, earthquakeDuringList, earthquakeAfterList,
 volcanoDuringList, volcanoProtectFromAsh, volcanoCanDo,
@@ -225,9 +225,9 @@ class HomeScreen extends React.Component {
       <View style={styles.topView}>
         <View style={styles.secondaryView}>
           <FlatList style={styles.list}
-            data={[{key:'Earthquake'}, {key: 'Volcano'}, {key: 'Storm'}, {key: 'Typhoon'}]}
+            data={[{key:'Earthquake 🏠'}, {key: 'Volcano 🌋'}, {key: 'Storm 🌪'}, {key: 'Typhoon 🌀'}]}
             renderItem={({item}) => <TouchableOpacity onPress={ () => {
-              this.props.navigation.navigate('Details', { title: item.key })}}
+              this.props.navigation.navigate('Details', { title: item.key.split(' ')[0] })}}
               style={styles.mainButton}>
               <Text style={styles.buttonContent}>{item.key}</Text>
             </TouchableOpacity>}
@@ -365,6 +365,7 @@ class StepsScreen extends React.Component {
     switch (param) {
       case "Earthquake":
       return <ScrollView style={styles.container}>
+        <Image style={styles.images} source={require('./img/quake.jpg')} />
         <Text style={styles.title}>Before an Earthquake:</Text>
         <Text style={styles.PrecautionScreenNote}>Press on items to mark as done.</Text>
 
@@ -381,13 +382,16 @@ class StepsScreen extends React.Component {
 
     case "Volcano":
     return <ScrollView style={styles.container}>
+      <Image style={styles.images} source={require('./img/volcano.jpg')} />
       <Text style={styles.title}>A Volcano can cause:</Text>
       <Text style={styles.PrecautionScreenNote}>Press on items to mark as done.</Text>
       <MultiSelectList data={volcanoCanDo}></MultiSelectList>
 
+      <Image style={styles.images} source={require('./img/volcano2.jpg')} />
       <Text style={styles.title}>During a Volcanic Eruption:</Text>
       <MultiSelectList data={volcanoDuringList}></MultiSelectList>
 
+      <Image style={styles.images} source={require('./img/volcanoash.jpg')} />
       <Text style={styles.title}>Protection from falling Ash:</Text>
       <MultiSelectList data={volcanoProtectFromAsh}></MultiSelectList>
 
@@ -395,16 +399,19 @@ class StepsScreen extends React.Component {
 
     case "Storm":
     return <ScrollView style={styles.container}>
+      <Image style={styles.images} source={require('./img/storm.jpg')} />
       <Text style={styles.title}>A Storm can cause:</Text>
       <Text style={styles.PrecautionScreenNote}>Press on items to mark as done.</Text>
       <MultiSelectList data={stormCanDo}></MultiSelectList>
 
+      <Image style={styles.images} source={require('./img/beforestorm.jpg')} />
       <Text style={styles.title}>Before a Storm:</Text>
       <MultiSelectList data={stormDoBefore}></MultiSelectList>
 
       <Text style={styles.title}>During a Storm:</Text>
       <MultiSelectList data={stormDoDuring}></MultiSelectList>
 
+      <Image style={styles.images} source={require('./img/afterstorm.jpg')} />
       <Text style={styles.title}>After a Storm:</Text>
       <MultiSelectList data={stormDoAfter}></MultiSelectList>
 
@@ -412,6 +419,7 @@ class StepsScreen extends React.Component {
 
     case "Typhoon":
     return <ScrollView style={styles.container}>
+      <Image style={styles.images} source={require('./img/typhoon.jpg')} />
       <Text style={styles.title}>Before a Typhoon:</Text>
       <Text style={styles.PrecautionScreenNote}>Press on items to mark as done.</Text>
       <MultiSelectList data={typhoonBefore}></MultiSelectList>
@@ -450,7 +458,24 @@ const DisastersStack = createBottomTabNavigator(
   {
     initialRouteName: 'Steps',
     navigationOptions: ({ navigation }) => ({
-    })
+      tabBarIcon: ({ focused, tintColor }) => {
+        const { routeName } = navigation.state;
+        if (routeName === 'Steps') {
+          return <Text>📋</Text>;
+        } else if (routeName === 'Bag') {
+          return <Text>🎒</Text>;
+        } else if (routeName === 'Emergency') {
+          return <Text>‼️</Text>;
+        }
+      },
+    }),
+    tabBarOptions: {
+      labelStyle: {
+        fontSize: 12,
+      },
+      activeTintColor: 'tomato',
+      inactiveTintColor: 'gray',
+    },
   }
 );
 
@@ -467,7 +492,7 @@ const RootStack = createStackNavigator(
 
 export default class App extends React.Component {
   render() {
-    return <RootStack/>;
+    return <RootStack persistenceKey={'navState'}/>;
   }
 }
 
@@ -621,4 +646,11 @@ const styles = StyleSheet.create({
     color: 'white',
     fontWeight: '600'
   },
+  images: {
+    marginRight: 'auto',
+    marginLeft: 'auto',
+    width: '100%',
+    height: 200,
+    borderRadius: 3
+  }
 });
