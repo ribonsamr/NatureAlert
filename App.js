@@ -286,7 +286,7 @@ class BagScreen extends React.Component {
     let length = this.state.tasks.filter(function(value) { return value !== null }).length;
 
     return (
-      <View style={{flexShrink: 1}}>
+      <View style={{flexShrink: 1, flex: 1}}>
         <TextInput
           style={{height: 40}}
           placeholder="Add..."
