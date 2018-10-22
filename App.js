@@ -236,7 +236,7 @@ class HomeScreen extends React.Component {
               <Text style={styles.buttonContent}>{item.key}</Text>
             </TouchableOpacity>}
           />
-          <Text style={styles.dummies}>The 4 Dummies – NASA SPACE APPS '18</Text>
+          <Text style={styles.dummies}>The 4 Dummies – NASA SPACE APPS 2018</Text>
         </View>
       </View>
     );
