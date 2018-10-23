@@ -9,7 +9,7 @@ NatureAlert is a simple, fast, and cross-platform mobile application that aims t
 
 **Note: If you are inexperienced with React Native, you may find difficulties running the app in the beginning, everything you need is on their official docs.**
 
-# Video Demo
+# Demo Video
 You can find the video [here](https://vimeo.com/296723265).
 
 # NASA SPACE APPS 2018
